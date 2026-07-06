@@ -1,154 +1,306 @@
-# AI Resume Analyzer
+# 🤖 AI Resume Analyzer
 
-A local, privacy-first resume analysis tool that scores resumes against job descriptions using NLP, skill matching, and ATS simulation — all running on your machine with no data sent to any external service.
+> An AI-powered Resume Analyzer built with **Python**, **Streamlit**, and **Natural Language Processing (NLP)** that evaluates resumes against job descriptions, calculates ATS compatibility, identifies skill gaps, and generates actionable recommendations.
 
----
-
-## Features
-
-- **ATS Scoring** — 9-category weighted score (skills, experience, education, projects, certifications, keyword density, formatting, length, summary)
-- **Skill Gap Analysis** — 341 skills / 948 aliases matched via spaCy PhraseMatcher + regex
-- **Semantic Matching** — TF-IDF cosine similarity with Jaccard fallback
-- **Keyword Comparison** — side-by-side resume vs JD keyword frequency
-- **Interactive Charts** — gauge, radar, donut, bar, and timeline charts (Plotly)
-- **HTML Report** — downloadable self-contained dark-theme report
-- **File Support** — PDF (pdfplumber + PyPDF2 fallback) and DOCX (body + tables + headers + textboxes)
+![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red?logo=streamlit)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
 ---
 
-## Quick Start
+# 📌 Project Overview
 
-### 1. Clone / download
+Recruiters use Applicant Tracking Systems (ATS) to filter resumes before they reach hiring managers.
+
+This project helps job seekers evaluate how well their resume matches a Job Description by analyzing:
+
+- ATS Compatibility Score
+- Skill Matching
+- Missing Skills
+- Keyword Analysis
+- Resume Parsing
+- Job Description Parsing
+- Candidate Profile
+- Interactive Dashboard
+- Downloadable Report
+
+The application provides intelligent suggestions to improve resumes and increase interview opportunities.
+
+---
+
+# ✨ Features
+
+## Resume Analysis
+
+- PDF Resume Parsing
+- DOCX Resume Parsing
+- Resume Information Extraction
+- Experience Detection
+- Education Detection
+- Certification Detection
+
+---
+
+## Job Description Analysis
+
+- Parse Job Description
+- Extract Required Skills
+- Extract Preferred Skills
+- Detect Experience Requirements
+- Identify Keywords
+
+---
+
+## ATS Scoring
+
+- Overall ATS Score
+- Resume Quality Score
+- Skills Match Score
+- Keyword Match Score
+- Experience Score
+- Education Score
+- Resume Completeness
+- Overall Compatibility
+
+---
+
+## Skill Gap Analysis
+
+- Matched Skills
+- Missing Skills
+- Additional Skills
+- Skills Categorization
+- AI Recommendations
+
+---
+
+## Interactive Dashboard
+
+- ATS Score Gauge
+- Radar Charts
+- Keyword Charts
+- Skill Distribution
+- Progress Indicators
+- Resume Statistics
+
+---
+
+## Report Generation
+
+Generate a professional HTML report containing:
+
+- ATS Score
+- Skills Analysis
+- Resume Summary
+- Improvement Suggestions
+- Candidate Information
+
+---
+
+# 🖥️ Screenshots
+
+## Dashboard
+
+(Add dashboard screenshot here)
+
+---
+
+## Skill Analysis
+
+(Add Skill Analysis screenshot here)
+
+---
+
+## Keyword Analysis
+
+(Add Keyword Analysis screenshot here)
+
+---
+
+## Resume Details
+
+(Add Resume Details screenshot here)
+
+---
+
+## HTML Report
+
+(Add Report screenshot here)
+
+---
+
+# 🛠️ Technology Stack
+
+### Programming Language
+
+- Python
+
+### Framework
+
+- Streamlit
+
+### NLP
+
+- spaCy
+- Regular Expressions
+
+### Data Processing
+
+- Pandas
+- NumPy
+
+### Resume Processing
+
+- pdfplumber
+- python-docx
+
+### Visualization
+
+- Plotly
+
+### Machine Learning
+
+- scikit-learn
+
+### Version Control
+
+- Git
+- GitHub
+
+---
+
+# 📂 Project Structure
+
+```
+AI-Resume-Analyzer/
+│
+├── app.py
+├── requirements.txt
+├── README.md
+│
+├── assets/
+│
+├── data/
+│   ├── skills.csv
+│   └── sample_jd.txt
+│
+├── models/
+│
+├── reports/
+│
+├── tests/
+│
+└── utils/
+    ├── ats_score.py
+    ├── charts.py
+    ├── docx_reader.py
+    ├── jd_parser.py
+    ├── matcher.py
+    ├── pdf_reader.py
+    ├── report_generator.py
+    ├── resume_parser.py
+    ├── skill_extractor.py
+    └── text_cleaner.py
+```
+
+---
+
+# ⚙️ Installation
+
+Clone the repository
 
 ```bash
-git clone https://github.com/your-username/AI-Resume-Analyzer.git
+git clone https://github.com/saideepakchittithula/AI-Resume-Analyzer.git
+```
+
+Go into the project
+
+```bash
 cd AI-Resume-Analyzer
 ```
 
-### 2. Create a virtual environment
-
-```bash
-python -m venv venv
-
-# Windows
-venv\Scripts\activate
-
-# macOS / Linux
-source venv/bin/activate
-```
-
-### 3. Install dependencies
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Download the spaCy model
-
-```bash
-python -m spacy download en_core_web_md
-```
-
-### 5. Run the app
+Run the application
 
 ```bash
 streamlit run app.py
 ```
 
-The app opens at `http://localhost:8501` in your browser.
+---
+
+# 🚀 How to Use
+
+1. Upload Resume (PDF or DOCX)
+
+2. Paste Job Description
+
+3. Click Analyze
+
+4. Review
+
+- ATS Score
+- Skill Gap
+- Keywords
+- Resume Details
+
+5. Download HTML Report
 
 ---
 
-## Usage
+# 🎯 Future Improvements
 
-1. **Upload Resume** — drag and drop a PDF or DOCX file in the sidebar
-2. **Add Job Description** — paste the JD text or upload a TXT / PDF / DOCX file
-3. **Click Analyze** — the full pipeline runs in a few seconds
-4. **Explore tabs**:
-   - **Dashboard** — overall ATS score, radar chart, category breakdown
-   - **Skill Analysis** — matched / missing / extra skills, skills by category
-   - **Keywords** — keyword frequency comparison between resume and JD
-   - **Resume Details** — parsed candidate info, experience timeline, JD summary
-   - **Report** — download a self-contained HTML report
-
----
-
-## Project Structure
-
-```
-AI-Resume-Analyzer/
-│
-├── app.py                    # Streamlit entry-point
-├── requirements.txt          # Python dependencies
-├── setup.py                  # Package setup
-│
-├── data/
-│   ├── skills.csv            # 341 skills with categories and aliases
-│   └── sample_jd.txt         # Sample job description for testing
-│
-└── utils/
-    ├── __init__.py           # Lazy import module
-    ├── constants.py          # ATS weights, regex patterns, config
-    ├── logger.py             # Rotating file + colored console logger
-    ├── helpers.py            # Pure utility functions
-    ├── pdf_reader.py         # PDF text extraction (pdfplumber + PyPDF2)
-    ├── docx_reader.py        # DOCX text extraction (body + tables + XML)
-    ├── text_cleaner.py       # 8-stage NLP cleaning pipeline
-    ├── resume_parser.py      # Resume field extractor (17 methods)
-    ├── jd_parser.py          # Job description parser (16 methods)
-    ├── skill_extractor.py    # Skill matching engine (PhraseMatcher + regex)
-    ├── matcher.py            # TF-IDF + semantic similarity matcher
-    ├── ats_score.py          # 9-category ATS scorer
-    ├── charts.py             # Plotly chart builders
-    └── report_generator.py   # HTML report generator
-```
+- AI Resume Rewriting
+- Resume Ranking
+- AI Cover Letter Generator
+- LinkedIn Profile Analyzer
+- Interview Question Generator
+- Multi-language Resume Support
+- PDF Report Export
+- OpenAI Integration
+- Recruiter Dashboard
+- Candidate Comparison
 
 ---
 
-## ATS Scoring Breakdown
+# 💼 Skills Demonstrated
 
-| Category        | Weight | What it measures |
-|-----------------|--------|-----------------|
-| Skills Match    | 30     | Overlap between resume skills and JD required/preferred skills |
-| Experience      | 20     | Years of experience vs JD requirement |
-| Education       | 10     | Degree level vs JD education requirement |
-| Projects        | 10     | Presence and relevance of project entries |
-| Certifications  | 5      | Relevant certifications listed |
-| Keyword Density | 10     | JD keyword coverage in resume |
-| Formatting      | 5      | Section structure, contact info, length balance |
-| Resume Length   | 5      | Word count in optimal range (400–800 words) |
-| Summary         | 5      | Presence and quality of professional summary |
-
----
-
-## Tech Stack
-
-| Layer        | Library |
-|--------------|---------|
-| UI           | Streamlit |
-| NLP          | spaCy `en_core_web_md`, NLTK |
-| ML / Similarity | scikit-learn (TF-IDF, cosine similarity) |
-| PDF parsing  | pdfplumber, PyPDF2 |
-| DOCX parsing | python-docx |
-| Charts       | Plotly |
-| Data         | pandas |
-| Logging      | Python `logging` + rotating file handler |
+- Python
+- Streamlit
+- NLP
+- Resume Parsing
+- ATS Scoring
+- Prompt Engineering
+- Data Visualization
+- Modular Architecture
+- Git & GitHub
+- Software Development
 
 ---
 
-## Requirements
+# 👨‍💻 Author
 
-- Python 3.10+
-- See `requirements.txt` for full dependency list
+**Sai Deepak**
+
+AI Automation Engineer
+
+Hyderabad, India
+
+GitHub
+
+https://github.com/saideepakchittithula
+
+LinkedIn
+
+(Add your LinkedIn profile here)
 
 ---
 
-## Privacy
+# ⭐ If you like this project
 
-All processing runs locally. No resume text, scores, or personal data is sent to any external server or API.
-
----
-
-## License
-
-MIT License — free to use, modify, and distribute.
+Please consider giving this repository a ⭐ on GitHub.
