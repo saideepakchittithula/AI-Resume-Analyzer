@@ -1,0 +1,332 @@
+"""
+report_generator.py — Builds a downloadable HTML report from analysis results.
+"""
+
+from __future__ import annotations
+import io
+import datetime
+from typing import Optional
+from utils.logger import get_logger
+
+log = get_logger(__name__)
+
+# ── colour helpers ────────────────────────────────────────────────────────────
+def _score_color(score: float) -> str:
+    if score >= 80: return "#2ecc71"
+    if score >= 60: return "#3498db"
+    if score >= 40: return "#f39c12"
+    return "#e74c3c"
+
+
+def _pill(text: str, bg: str = "#2a2a3e", fg: str = "#e0e0e0") -> str:
+    return (
+        f'<span style="background:{bg};color:{fg};padding:3px 10px;'
+        f'border-radius:12px;font-size:12px;margin:2px;display:inline-block">'
+        f'{text}</span>'
+    )
+
+
+def _section(title: str, body: str) -> str:
+    return f"""
+<div class="section">
+  <h2>{title}</h2>
+  {body}
+</div>"""
+
+
+# ── CSS ───────────────────────────────────────────────────────────────────────
+_CSS = """
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0f0f1a;
+  color: #e0e0e0;
+  padding: 32px;
+  line-height: 1.6;
+}
+.container { max-width: 900px; margin: auto; }
+header {
+  text-align: center;
+  padding: 32px 0 24px;
+  border-bottom: 1px solid #2a2a3e;
+  margin-bottom: 32px;
+}
+header h1 { font-size: 28px; color: #4A90D9; margin-bottom: 6px; }
+header p  { color: #888; font-size: 13px; }
+.score-hero {
+  text-align: center;
+  margin: 24px 0;
+}
+.score-circle {
+  display: inline-block;
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  border: 6px solid VAR_COLOR;
+  line-height: 118px;
+  font-size: 36px;
+  font-weight: 700;
+  color: VAR_COLOR;
+  margin-bottom: 8px;
+}
+.score-label { font-size: 18px; color: VAR_COLOR; font-weight: 600; }
+.section {
+  background: #1a1a2e;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  border: 1px solid #2a2a3e;
+}
+.section h2 {
+  font-size: 16px;
+  color: #4A90D9;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.bar-row { margin: 6px 0; }
+.bar-label {
+  display: inline-block;
+  width: 200px;
+  font-size: 13px;
+  color: #ccc;
+  vertical-align: middle;
+}
+.bar-track {
+  display: inline-block;
+  width: 340px;
+  background: #2a2a3e;
+  border-radius: 6px;
+  height: 10px;
+  vertical-align: middle;
+  margin: 0 10px;
+}
+.bar-fill {
+  height: 10px;
+  border-radius: 6px;
+  background: VAR_COLOR;
+}
+.bar-score { font-size: 12px; color: #aaa; vertical-align: middle; }
+ul.plain { list-style: none; padding: 0; }
+ul.plain li { padding: 4px 0; font-size: 13px; color: #ccc; }
+ul.plain li::before { content: "• "; color: #4A90D9; }
+.two-col { display: flex; gap: 20px; }
+.two-col > div { flex: 1; }
+.tag-cloud { margin-top: 8px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th {
+  text-align: left;
+  padding: 8px 12px;
+  background: #2a2a3e;
+  color: #4A90D9;
+  font-weight: 600;
+}
+td { padding: 7px 12px; border-bottom: 1px solid #2a2a3e; color: #ccc; }
+tr:last-child td { border-bottom: none; }
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #2a2a3e;
+  font-size: 12px;
+  color: #555;
+}
+"""
+
+
+# ── main class ────────────────────────────────────────────────────────────────
+class ReportGenerator:
+    """Generates a self-contained HTML report from analysis results."""
+
+    # ------------------------------------------------------------------
+    def generate(
+        self,
+        ats_result:     dict,
+        match_result:   dict,
+        resume_data:    dict,
+        jd_data:        dict,
+        candidate_name: Optional[str] = None,
+        job_title:      Optional[str] = None,
+    ) -> str:
+        """Return the full HTML report as a string."""
+        name  = candidate_name or resume_data.get("name", "Candidate")
+        title = job_title      or jd_data.get("job_title", "Position")
+        score = ats_result.get("overall_score", 0)
+        label = ats_result.get("label", "")
+        color = _score_color(score)
+        now   = datetime.datetime.now().strftime("%B %d, %Y  %H:%M")
+
+        css = _CSS.replace("VAR_COLOR", color)
+
+        body_parts = [
+            self._hero(score, label, color),
+            self._breakdown_section(ats_result.get("breakdown", {})),
+            self._skill_section(match_result),
+            self._strengths_weaknesses(ats_result),
+            self._suggestions(match_result),
+            self._resume_summary(resume_data),
+            self._jd_summary(jd_data),
+        ]
+
+        html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Resume Analysis — {name}</title>
+<style>{css}</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>AI Resume Analyzer Report</h1>
+    <p><strong style="color:#ccc">{name}</strong> &nbsp;|&nbsp; {title} &nbsp;|&nbsp; {now}</p>
+  </header>
+  {''.join(body_parts)}
+  <footer>Generated by AI Resume Analyzer &nbsp;|&nbsp; {now}</footer>
+</div>
+</body>
+</html>"""
+        log.info("Report generated for %s", name)
+        return html
+
+    # ------------------------------------------------------------------
+    def to_bytes(self, html: str) -> bytes:
+        """Encode HTML to UTF-8 bytes (for Streamlit download_button)."""
+        return html.encode("utf-8")
+
+    # ── private builders ───────────────────────────────────────────────
+    def _hero(self, score: float, label: str, color: str) -> str:
+        circle_style = (
+            f'display:inline-block;width:130px;height:130px;border-radius:50%;'
+            f'border:6px solid {color};line-height:118px;font-size:36px;'
+            f'font-weight:700;color:{color};text-align:center;'
+        )
+        return f"""
+<div class="score-hero">
+  <div style="{circle_style}">{score:.1f}</div><br>
+  <span class="score-label" style="color:{color}">{label}</span>
+  <p style="color:#888;font-size:13px;margin-top:6px">Overall ATS Score</p>
+</div>"""
+
+    def _breakdown_section(self, breakdown: dict) -> str:
+        if not breakdown:
+            return ""
+        rows = []
+        for cat, info in breakdown.items():
+            s   = info.get("score", 0)
+            m   = info.get("max",   10) or 10
+            pct = round(s / m * 100)
+            col = _score_color(pct)
+            label = cat.replace("_", " ").title()
+            rows.append(f"""
+<div class="bar-row">
+  <span class="bar-label">{label}</span>
+  <span class="bar-track">
+    <div class="bar-fill" style="width:{pct}%;background:{col}"></div>
+  </span>
+  <span class="bar-score">{s}/{m}</span>
+</div>""")
+        return _section("Category Breakdown", "".join(rows))
+
+    def _skill_section(self, match_result: dict) -> str:
+        matched = match_result.get("matched_skills", [])
+        missing = match_result.get("missing_skills", [])
+        extra   = match_result.get("extra_skills",   [])
+
+        matched_html = '<div class="tag-cloud">' + "".join(
+            _pill(s, "#0f2d1a", "#2ecc71") for s in matched
+        ) + "</div>" if matched else "<p style='color:#666'>None</p>"
+
+        missing_html = '<div class="tag-cloud">' + "".join(
+            _pill(s, "#2d1b1b", "#e74c3c") for s in missing
+        ) + "</div>" if missing else "<p style='color:#666'>None</p>"
+
+        body = f"""
+<div class="two-col">
+  <div>
+    <p style="color:#2ecc71;font-size:13px;margin-bottom:6px">
+      Matched ({len(matched)})
+    </p>
+    {matched_html}
+  </div>
+  <div>
+    <p style="color:#e74c3c;font-size:13px;margin-bottom:6px">
+      Missing ({len(missing)})
+    </p>
+    {missing_html}
+  </div>
+</div>"""
+        if extra:
+            extra_html = '<div class="tag-cloud">' + "".join(
+                _pill(s, "#1a1a2e", "#95a5a6") for s in extra
+            ) + "</div>"
+            body += f"""
+<div style="margin-top:14px">
+  <p style="color:#95a5a6;font-size:13px;margin-bottom:6px">
+    Additional Skills ({len(extra)})
+  </p>
+  {extra_html}
+</div>"""
+        return _section("Skill Analysis", body)
+
+    def _strengths_weaknesses(self, ats_result: dict) -> str:
+        strengths  = ats_result.get("strengths",  [])
+        weaknesses = ats_result.get("weaknesses", [])
+
+        s_items = "".join(f"<li>{s}</li>" for s in strengths)  if strengths  else "<li>N/A</li>"
+        w_items = "".join(f"<li>{w}</li>" for w in weaknesses) if weaknesses else "<li>N/A</li>"
+
+        body = f"""
+<div class="two-col">
+  <div>
+    <p style="color:#2ecc71;font-size:13px;margin-bottom:6px">Strengths</p>
+    <ul class="plain">{s_items}</ul>
+  </div>
+  <div>
+    <p style="color:#e74c3c;font-size:13px;margin-bottom:6px">Areas to Improve</p>
+    <ul class="plain">{w_items}</ul>
+  </div>
+</div>"""
+        return _section("Strengths & Weaknesses", body)
+
+    def _suggestions(self, match_result: dict) -> str:
+        suggestions = match_result.get("suggestions", [])
+        if not suggestions:
+            return ""
+        items = "".join(f"<li>{s}</li>" for s in suggestions)
+        return _section("Improvement Suggestions",
+                        f'<ul class="plain">{items}</ul>')
+
+    def _resume_summary(self, resume_data: dict) -> str:
+        rows = [
+            ("Name",        resume_data.get("name",             "—")),
+            ("Email",       resume_data.get("email",            "—")),
+            ("Phone",       resume_data.get("phone",            "—")),
+            ("LinkedIn",    resume_data.get("linkedin",         "—")),
+            ("Experience",  f"{resume_data.get('experience_years', 0)} years"),
+            ("Word Count",  str(resume_data.get("word_count",   0))),
+        ]
+        table = "<table><tr><th>Field</th><th>Value</th></tr>"
+        for k, v in rows:
+            table += f"<tr><td>{k}</td><td>{v or '—'}</td></tr>"
+        table += "</table>"
+        return _section("Candidate Summary", table)
+
+    def _jd_summary(self, jd_data: dict) -> str:
+        rows = [
+            ("Job Title",        jd_data.get("job_title",        "—")),
+            ("Company",          jd_data.get("company",          "—")),
+            ("Location",         jd_data.get("location",         "—")),
+            ("Employment Type",  jd_data.get("employment_type",  "—")),
+            ("Experience Level", jd_data.get("experience_level", "—")),
+            ("Remote",           "Yes" if jd_data.get("is_remote") else "No"),
+        ]
+        table = "<table><tr><th>Field</th><th>Value</th></tr>"
+        for k, v in rows:
+            table += f"<tr><td>{k}</td><td>{v or '—'}</td></tr>"
+        table += "</table>"
+        return _section("Job Description Summary", table)

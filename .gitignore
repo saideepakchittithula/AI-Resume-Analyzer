@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Environment Variables
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project specific
+reports/*.pdf
+reports/*.csv
+data/sample_resume.pdf
+*.log
+logs/
+
+# spaCy models
+models/*.bin
+models/en_core_web_sm/
+models/en_core_web_md/
+models/en_core_web_lg/
+
+# Streamlit
+.streamlit/secrets.toml

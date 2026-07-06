@@ -1,0 +1,57 @@
+Job Title: Senior AI/ML Engineer
+
+Company: TechCorp Solutions
+
+Location: Remote / San Francisco, CA
+
+About the Role:
+We are looking for a passionate and experienced Senior AI/ML Engineer to join our growing team.
+You will design, build, and deploy intelligent systems that power our next-generation products.
+
+Responsibilities:
+- Design and implement machine learning models and AI pipelines
+- Build and maintain RESTful APIs using FastAPI or Flask
+- Develop NLP and LLM-based applications using LangChain and OpenAI
+- Work with large datasets using Pandas, NumPy, and SQL
+- Deploy models using Docker, Kubernetes, and AWS/GCP
+- Write clean, tested, production-ready Python code
+- Collaborate with cross-functional teams including product and design
+- Mentor junior engineers and perform code reviews
+
+Required Skills:
+- Python (5+ years)
+- Machine Learning and Deep Learning
+- Natural Language Processing (NLP)
+- LLMs, Prompt Engineering, LangChain
+- FastAPI or Flask
+- Docker and Kubernetes
+- AWS or GCP
+- Git, GitHub, CI/CD
+- Pandas, NumPy, Scikit-learn
+- SQL and NoSQL databases (PostgreSQL, MongoDB)
+
+Nice to Have:
+- Experience with HuggingFace Transformers
+- OpenAI API integration
+- CrewAI or AutoGen experience
+- React or Vue for frontend integration
+- Playwright or Selenium for automation
+
+Education:
+- Bachelor's or Master's in Computer Science, AI, Data Science or related field
+
+Experience:
+- 4+ years of software engineering experience
+- 2+ years of ML/AI engineering experience
+
+Certifications (Preferred):
+- AWS Certified Machine Learning Specialty
+- Google Professional ML Engineer
+- TensorFlow Developer Certificate
+
+What We Offer:
+- Competitive salary $130,000 - $180,000
+- Remote-first culture
+- Health, dental, and vision benefits
+- $2,000 annual learning budget
+- Stock options
