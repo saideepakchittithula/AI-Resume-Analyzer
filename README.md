@@ -102,31 +102,35 @@ Generate a professional HTML report containing:
 
 ## Dashboard
 
-(Add dashboard screenshot here)
+<img width="1568" height="864" alt="Screenshot 2026-07-07 171518" src="https://github.com/user-attachments/assets/b078ba4c-0148-40ca-b074-2f492a375be2" />
 
 ---
 
 ## Skill Analysis
 
-(Add Skill Analysis screenshot here)
+<img width="1579" height="833" alt="Screenshot 2026-07-07 163510" src="https://github.com/user-attachments/assets/9bda250b-2059-4f5b-8d0c-f15c9eee168d" />
+
 
 ---
 
 ## Keyword Analysis
 
-(Add Keyword Analysis screenshot here)
+<img width="1588" height="859" alt="Screenshot 2026-07-07 163435" src="https://github.com/user-attachments/assets/1f7635e1-6e28-4e8b-a12a-19d7ea93afed" />
+
 
 ---
 
 ## Resume Details
 
-(Add Resume Details screenshot here)
+<img width="1588" height="859" alt="Screenshot 2026-07-07 163435" src="https://github.com/user-attachments/assets/1f7635e1-6e28-4e8b-a12a-19d7ea93afed" />
+
 
 ---
 
 ## HTML Report
 
-(Add Report screenshot here)
+<img width="1594" height="857" alt="Screenshot 2026-07-07 163425" src="https://github.com/user-attachments/assets/27f21dc2-565b-41b8-9898-493cae2d33ab" />
+)
 
 ---
 
