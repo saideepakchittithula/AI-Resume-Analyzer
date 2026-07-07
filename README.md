@@ -9,170 +9,76 @@
 
 ---
 
-# 📌 Project Overview
+## 📌 Project Overview
 
 Recruiters use Applicant Tracking Systems (ATS) to filter resumes before they reach hiring managers.
 
-This project helps job seekers evaluate how well their resume matches a Job Description by analyzing:
-
-- ATS Compatibility Score
-- Skill Matching
-- Missing Skills
-- Keyword Analysis
-- Resume Parsing
-- Job Description Parsing
-- Candidate Profile
-- Interactive Dashboard
-- Downloadable Report
-
-The application provides intelligent suggestions to improve resumes and increase interview opportunities.
+This project helps job seekers evaluate how well their resume matches a job description by analyzing ATS compatibility, skill overlap, keyword usage, and resume structure — then generates an interactive dashboard and a downloadable report with clear, actionable suggestions to improve interview chances.
 
 ---
 
-# ✨ Features
+## ✨ Features
 
-## Resume Analysis
+### 📄 Resume & Job Description Parsing
+- Parses resumes from **PDF** and **DOCX** formats
+- Extracts experience, education, and certifications from the resume
+- Parses the job description to identify required skills, preferred skills, experience requirements, and key terms
 
-- PDF Resume Parsing
-- DOCX Resume Parsing
-- Resume Information Extraction
-- Experience Detection
-- Education Detection
-- Certification Detection
+### 📊 ATS Scoring
+- Overall ATS Score combining multiple sub-metrics
+- Resume Quality, Skills Match, Keyword Match, Experience, and Education scores
+- Resume Completeness and Overall Compatibility ratings
 
----
+### 🎯 Skill Gap Analysis
+- Highlights **matched**, **missing**, and **additional** skills relative to the job description
+- Categorizes skills (e.g., technical, soft, tools) for easier review
+- Provides AI-generated recommendations to close identified gaps
 
-## Job Description Analysis
+### 📈 Interactive Dashboard
+- ATS Score Gauge and Radar Charts
+- Keyword frequency and skill distribution charts
+- Progress indicators and resume statistics, all built with Plotly
 
-- Parse Job Description
-- Extract Required Skills
-- Extract Preferred Skills
-- Detect Experience Requirements
-- Identify Keywords
-
----
-
-## ATS Scoring
-
-- Overall ATS Score
-- Resume Quality Score
-- Skills Match Score
-- Keyword Match Score
-- Experience Score
-- Education Score
-- Resume Completeness
-- Overall Compatibility
+### 📥 Report Generation
+- Generates a professional, downloadable **HTML report** containing the ATS score, skills analysis, resume summary, candidate info, and improvement suggestions
 
 ---
 
-## Skill Gap Analysis
+## 🖥️ Screenshots
 
-- Matched Skills
-- Missing Skills
-- Additional Skills
-- Skills Categorization
-- AI Recommendations
+### Dashboard
+<img width="1568" height="864" alt="Dashboard screenshot" src="https://github.com/user-attachments/assets/b078ba4c-0148-40ca-b074-2f492a375be2" />
 
----
+### Skill Analysis
+<img width="1579" height="833" alt="Skill analysis screenshot" src="https://github.com/user-attachments/assets/9bda250b-2059-4f5b-8d0c-f15c9eee168d" />
 
-## Interactive Dashboard
+### Keyword Analysis
+<img width="1568" height="787" alt="Keyword analysis screenshot" src="https://github.com/user-attachments/assets/39b92146-181a-4ecf-a544-93a10bb82d86" />
 
-- ATS Score Gauge
-- Radar Charts
-- Keyword Charts
-- Skill Distribution
-- Progress Indicators
-- Resume Statistics
+### Resume Details
+<img width="1588" height="859" alt="Resume details screenshot" src="https://github.com/user-attachments/assets/1f7635e1-6e28-4e8b-a12a-19d7ea93afed" />
+
+### HTML Report
+<img width="1594" height="857" alt="HTML report screenshot" src="https://github.com/user-attachments/assets/27f21dc2-565b-41b8-9898-493cae2d33ab" />
 
 ---
 
-## Report Generation
+## 🛠️ Technology Stack
 
-Generate a professional HTML report containing:
-
-- ATS Score
-- Skills Analysis
-- Resume Summary
-- Improvement Suggestions
-- Candidate Information
-
----
-
-# 🖥️ Screenshots
-
-## Dashboard
-
-<img width="1568" height="864" alt="Screenshot 2026-07-07 171518" src="https://github.com/user-attachments/assets/b078ba4c-0148-40ca-b074-2f492a375be2" />
+| Category | Tools |
+|---|---|
+| Programming Language | Python |
+| Framework | Streamlit |
+| NLP | spaCy, Regular Expressions |
+| Data Processing | Pandas, NumPy |
+| Resume Processing | pdfplumber, python-docx |
+| Visualization | Plotly |
+| Machine Learning | scikit-learn |
+| Version Control | Git, GitHub |
 
 ---
 
-## Skill Analysis
-
-<img width="1579" height="833" alt="Screenshot 2026-07-07 163510" src="https://github.com/user-attachments/assets/9bda250b-2059-4f5b-8d0c-f15c9eee168d" />
-
-
----
-
-## Keyword Analysis
-
-<img width="1568" height="787" alt="Screenshot 2026-07-07 163313" src="https://github.com/user-attachments/assets/39b92146-181a-4ecf-a544-93a10bb82d86" />
-
----
-
-## Resume Details
-
-<img width="1588" height="859" alt="Screenshot 2026-07-07 163435" src="https://github.com/user-attachments/assets/1f7635e1-6e28-4e8b-a12a-19d7ea93afed" />
-
----
-
-## HTML Report
-
-<img width="1594" height="857" alt="Screenshot 2026-07-07 163425" src="https://github.com/user-attachments/assets/27f21dc2-565b-41b8-9898-493cae2d33ab" />
-
-
----
-
-# 🛠️ Technology Stack
-
-### Programming Language
-
-- Python
-
-### Framework
-
-- Streamlit
-
-### NLP
-
-- spaCy
-- Regular Expressions
-
-### Data Processing
-
-- Pandas
-- NumPy
-
-### Resume Processing
-
-- pdfplumber
-- python-docx
-
-### Visualization
-
-- Plotly
-
-### Machine Learning
-
-- scikit-learn
-
-### Version Control
-
-- Git
-- GitHub
-
----
-
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```
 AI-Resume-Analyzer/
@@ -208,54 +114,46 @@ AI-Resume-Analyzer/
 
 ---
 
-# ⚙️ Installation
+## ⚙️ Installation
 
-Clone the repository
-
+**1. Clone the repository**
 ```bash
 git clone https://github.com/saideepakchittithula/AI-Resume-Analyzer.git
 ```
 
-Go into the project
-
+**2. Go into the project**
 ```bash
 cd AI-Resume-Analyzer
 ```
 
-Install dependencies
-
+**3. Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the application
+**4. Download the spaCy language model** *(required for NLP parsing)*
+```bash
+python -m spacy download en_core_web_sm
+```
 
+**5. Run the application**
 ```bash
 streamlit run app.py
 ```
 
 ---
 
-# 🚀 How to Use
+## 🚀 How to Use
 
-1. Upload Resume (PDF or DOCX)
-
-2. Paste Job Description
-
-3. Click Analyze
-
-4. Review
-
-- ATS Score
-- Skill Gap
-- Keywords
-- Resume Details
-
-5. Download HTML Report
+1. Upload your resume (PDF or DOCX)
+2. Paste the job description
+3. Click **Analyze**
+4. Review your ATS score, skill gaps, keyword analysis, and resume details
+5. Download the HTML report
 
 ---
 
-# 🎯 Future Improvements
+## 🎯 Future Improvements
 
 - AI Resume Rewriting
 - Resume Ranking
@@ -270,39 +168,21 @@ streamlit run app.py
 
 ---
 
-# 💼 Skills Demonstrated
+## 💼 Skills Demonstrated
 
-- Python
-- Streamlit
-- NLP
-- Resume Parsing
-- ATS Scoring
-- Prompt Engineering
-- Data Visualization
-- Modular Architecture
-- Git & GitHub
-- Software Development
+Python · NLP (spaCy) · Resume/JD Parsing · ATS Scoring Algorithms · Data Visualization (Plotly) · Modular Software Architecture · Git & GitHub
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Sai Deepak**
+AI Automation Engineer — Hyderabad, India
 
-AI Automation Engineer
-
-Hyderabad, India
-
-GitHub
-
-https://github.com/saideepakchittithula
-
-LinkedIn
-
-www.linkedin.com/in/sai-deepak-chittithula-b51a70247
+[GitHub](https://github.com/saideepakchittithula) · [LinkedIn](https://www.linkedin.com/in/sai-deepak-chittithula-b51a70247)
 
 ---
 
-# ⭐ If you like this project
+## ⭐ Support
 
-Please consider giving this repository a ⭐ on GitHub.
+If you find this project useful, please consider giving it a ⭐ on GitHub!
