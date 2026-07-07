@@ -115,8 +115,7 @@ Generate a professional HTML report containing:
 
 ## Keyword Analysis
 
-<img width="1588" height="859" alt="Screenshot 2026-07-07 163435" src="https://github.com/user-attachments/assets/1f7635e1-6e28-4e8b-a12a-19d7ea93afed" />
-
+<img width="1568" height="787" alt="Screenshot 2026-07-07 163313" src="https://github.com/user-attachments/assets/39b92146-181a-4ecf-a544-93a10bb82d86" />
 
 ---
 
@@ -124,13 +123,12 @@ Generate a professional HTML report containing:
 
 <img width="1588" height="859" alt="Screenshot 2026-07-07 163435" src="https://github.com/user-attachments/assets/1f7635e1-6e28-4e8b-a12a-19d7ea93afed" />
 
-
 ---
 
 ## HTML Report
 
 <img width="1594" height="857" alt="Screenshot 2026-07-07 163425" src="https://github.com/user-attachments/assets/27f21dc2-565b-41b8-9898-493cae2d33ab" />
-)
+
 
 ---
 
@@ -301,7 +299,7 @@ https://github.com/saideepakchittithula
 
 LinkedIn
 
-(Add your LinkedIn profile here)
+www.linkedin.com/in/sai-deepak-chittithula-b51a70247
 
 ---
 
